@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('favorite_jobs', function (Blueprint $table) {
             $table->id();
-
+            $table->string('name');
             $table->timestamps();
         });
     }
