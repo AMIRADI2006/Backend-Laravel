@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminStoreValidation;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -9,11 +10,11 @@ use Illuminate\Routing\Controller;
 class AdminController extends Controller
 {
     //
-    public function store(Request $request)
+    public function store(AdminStoreValidation $adminStoreValidation)
     {
 //        dd($request->name);
 
-        $Admin = Admin::create($request->all());
+        $Admin = Admin::create($adminStoreValidation->all());
         return response()->json([
             'message' => 'create admin has been successfully !',
             'data' => $Admin
@@ -30,7 +31,7 @@ class AdminController extends Controller
     }
 
 
-    public function update(Admin $admin , Request $request)
+    public function update(Admin $admin , AdminStoreValidation $adminStoreValidation)
     {
         $admin->update(\request()->all());
         $admin = Admin::find($admin->id);

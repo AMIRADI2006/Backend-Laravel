@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\JobController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +32,16 @@ Route::post('/admin/store' , [AdminController::class , 'store']);
 Route::get('/admin/{admin}/show' , [AdminController::class , 'show']);
 Route::put('/admin/{admin}/update' , [AdminController::class , 'update']);
 Route::delete('/admin/{admin}/delete' , [AdminController::class , 'delete']);
+
+Route::post('/category/store' , [CategoryController::class , 'store']);
+Route::get('/category/{category}/show' , [CategoryController::class , 'show']);
+Route::put('/category/{category}/update' , [CategoryController::class , 'update']);
+Route::delete('/category/{category}/delete' , [CategoryController::class , 'delete']);
+
+Route::post('/company/store' , [\App\Http\Controllers\CompanyController::class , 'store']);
+Route::get('/company/{company}/show' , [\App\Http\Controllers\CompanyController::class , 'show']);
+Route::put('/company/{company}/update' , [\App\Http\Controllers\CompanyController::class , 'update']);
+Route::delete('/company/{company}/delete' , [\App\Http\Controllers\CompanyController::class , 'delete']);
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

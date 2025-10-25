@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JobStoreValidation;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -9,9 +10,9 @@ use Illuminate\Routing\Controller;
 class JobController extends Controller
 {
 //    ذخیره کردن
-    public function store(Request $request)
+    public function store(JobStoreValidation $jobStoreValidation)
     {
-        $Job = Job::create($request->all());
+        $Job = Job::create($jobStoreValidation->all());
         return response()->json([
             'message' => 'create job has been successfully !',
             'data' => $Job
@@ -28,7 +29,7 @@ class JobController extends Controller
     }
 
 //    برای اپدیت مقادیر
-    public function update(Job $job , Request $request )
+    public function update(Job $job , JobStoreValidation $jobStoreValidation )
     {
         $job->update(\request()->all());
         $job = Job::find($job->id);

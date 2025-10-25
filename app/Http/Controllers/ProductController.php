@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreValidation;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class  ProductController extends Controller
 {
-    public function store(Request $request)
+    public function store(ProductStoreValidation $productStoreValidation)
     {
 //        فقط برای نمایش هستش مثل کنسول لاگ در جاوا اسکریپت
 //        dd($request->name);
@@ -20,7 +21,7 @@ class  ProductController extends Controller
 //        ]);
 
 //        روش دوم (روش بهتر )
-        $Product = Product::create($request->all());
+        $Product = Product::create($productStoreValidation->all());
         return response()->json([
             'message' => 'create product has been successfully !',
             'data' => $Product
@@ -35,7 +36,7 @@ class  ProductController extends Controller
         ]);
     }
 
-    public function update(Product $product , Request $request)
+    public function update(Product $product , ProductStoreValidation $productStoreValidation)
     {
 //        برای نمایس
 //        dd($product , $request->all());
