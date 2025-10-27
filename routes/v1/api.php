@@ -44,6 +44,9 @@ Route::put('/company/{company}/update' , [\App\Http\Controllers\CompanyControlle
 Route::delete('/company/{company}/delete' , [\App\Http\Controllers\CompanyController::class , 'delete']);
 
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::get('/user/{user}/token' , [\App\Http\Controllers\UserController::class , 'createToken']);
+
+Route::middleware('auth:sanctum')->group(function (){
+   Route::put('user/{user}/update' , [\App\Http\Controllers\UserController::class , 'update']);
+
+});

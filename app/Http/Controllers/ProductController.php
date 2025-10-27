@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreValidation;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -32,7 +33,7 @@ class  ProductController extends Controller
     {
         return response()->json([
            'message'=> 'product has been fetch',
-            'data'=> $product
+            'data'=> new ProductResource($product)
         ]);
     }
 
