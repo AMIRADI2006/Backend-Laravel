@@ -25,11 +25,12 @@ class  ProductController extends Controller
 
 
         $Product = Product::create($productStoreValidation->except('image_url'));
-        $image_url = Storage::putFile('/products',$productStoreValidation->image_url);
+        $image_url = Storage::putFile('/googooli',$productStoreValidation->image_url);
         $Product->update(['image_url' => $image_url]);
+        $productFull = Product::find($Product->id);
         return response()->json([
             'message' => 'create product has been successfully !',
-            'data' => $Product
+            'data' => new  ProductResource($productFull)
         ]);
     }
 
