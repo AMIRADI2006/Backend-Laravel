@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Http\Controllers\PersonalInfoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,10 +42,13 @@ Route::get('/category/{category}/show' , [CategoryController::class , 'show']);
 Route::put('/category/{category}/update' , [CategoryController::class , 'update']);
 Route::delete('/category/{category}/delete' , [CategoryController::class , 'delete']);
 
-Route::post('/company/store' , [\App\Http\Controllers\CompanyController::class , 'store']);
-Route::get('/company/{company}/show' , [\App\Http\Controllers\CompanyController::class , 'show']);
-Route::put('/company/{company}/update' , [\App\Http\Controllers\CompanyController::class , 'update']);
-Route::delete('/company/{company}/delete' , [\App\Http\Controllers\CompanyController::class , 'delete']);
+Route::post('/company/store' , [CompanyController::class , 'store']);
+Route::get('/company/{company}/show' , [CompanyController::class , 'show']);
+Route::put('/company/{company}/update' , [CompanyController::class , 'update']);
+Route::delete('/company/{company}/delete' , [CompanyController::class , 'delete']);
+
+Route::get('/personal-info', [PersonalInfoController::class, 'show']);
+Route::put('/personal-info', [PersonalInfoController::class, 'update']);
 
 
 Route::get('/user/{user}/token' , [\App\Http\Controllers\UserController::class , 'createToken']);
