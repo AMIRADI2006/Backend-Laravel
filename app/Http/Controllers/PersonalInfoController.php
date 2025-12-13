@@ -10,7 +10,7 @@ use function response;
 
 class PersonalInfoController extends Controller
 {
-    // GET /api/personal-info
+    // GET /api/v1/personal-info
     public function show()
     {
         // اگر چند رکورد نباشه، رکورد اول را برگردان
@@ -27,12 +27,9 @@ class PersonalInfoController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'job_title' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:50',
             'location' => 'nullable|string|max:255',
-            'linkedin' => 'nullable|url|max:500',
-            'portfolio' => 'nullable|url|max:500',
             'marital_status' => 'nullable|in:Married,Single',
             'gender' => 'nullable|in:Female,Male,Other',
             'birth_year' => 'nullable|digits:4',
