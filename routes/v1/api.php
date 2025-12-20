@@ -1,59 +1,45 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\PersonalInfoController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    AdminController,
+    AuthController,
+    CategoryController,
+    CompanyController,
+    JobController,
+    PersonalInfoController,
+    ProductController
+};
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::apiResource('product', ProductController::class);
+Route::apiResource('job', JobController::class);
+Route::apiResource('admin', AdminController::class);
+Route::apiResource('category', CategoryController::class);
+Route::apiResource('company', CompanyController::class);
 
-Route::post('/product/store' , [\App\Http\Controllers\ProductController::class , 'store']);
-Route::get('/product/{product}/show' , [\App\Http\Controllers\ProductController::class , 'show']);
-Route::put('/product/{product}/update' , [\App\Http\Controllers\ProductController::class , 'update']);
-Route::delete('/product/{product}/delete' , [\App\Http\Controllers\ProductController::class , 'delete']);
+// ثبت کاربر جدید + دریافت توکن
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/job', [JobController::class, 'index']);
+// ورود کاربر + دریافت توکن
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/job/store' , [JobController::class , 'store']);
-Route::get('/job/{job}/show' , [JobController::class , 'show']);
-Route::put('/job/{job}/update' , [JobController::class , 'update']);
-Route::delete('/job/{job}/delete' , [JobController::class , 'delete']);
+Route::middleware('auth:sanctum')->group(function () {
+    // 🔹 اطلاعات کاربر لاگین‌شده
+    Route::get('/me', function (Request $request) {
+        return response()->json($request->user());
+    });
 
-Route::post('/admin/store' , [AdminController::class , 'store']);
-Route::get('/admin/{admin}/show' , [AdminController::class , 'show']);
-Route::put('/admin/{admin}/update' , [AdminController::class , 'update']);
-Route::delete('/admin/{admin}/delete' , [AdminController::class , 'delete']);
+    // 🔹 خروج کاربر
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::get('/category', [CategoryController::class, 'index']);
+    Route::get('/personal-info', [PersonalInfoController::class, 'show']);
+    Route::post('/personal-info', [PersonalInfoController::class, 'store']);
+    Route::put('/personal-info', [PersonalInfoController::class, 'update']);
+    Route::delete('/personal-info', [PersonalInfoController::class, 'destroy']);
 
-Route::post('/category/store' , [CategoryController::class , 'store']);
-Route::get('/category/{category}/show' , [CategoryController::class , 'show']);
-Route::put('/category/{category}/update' , [CategoryController::class , 'update']);
-Route::delete('/category/{category}/delete' , [CategoryController::class , 'delete']);
+//    Route::apiResource('personal-info', PersonalInfoController::class);
 
-Route::post('/company/store' , [CompanyController::class , 'store']);
-Route::get('/company/{company}/show' , [CompanyController::class , 'show']);
-Route::put('/company/{company}/update' , [CompanyController::class , 'update']);
-Route::delete('/company/{company}/delete' , [CompanyController::class , 'delete']);
-
-Route::get('/personal-info', [PersonalInfoController::class, 'show']);
-Route::put('/personal-info', [PersonalInfoController::class, 'update']);
-
-
-Route::get('/user/{user}/token' , [\App\Http\Controllers\UserController::class , 'createToken']);
-
-Route::middleware('auth:sanctum')->group(function (){
-   Route::put('user/{user}/update' , [\App\Http\Controllers\UserController::class , 'update']);
-
+//    Route::get('/personal-info', [PersonalInfoController::class, 'show']);
+//    Route::put('/personal-info', [PersonalInfoController::class, 'update']);
 });

@@ -3,70 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreValidation;
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 
-class  ProductController extends Controller
+class ProductController extends Controller
 {
-    public function store(ProductStoreValidation $productStoreValidation)
+    public function index()
     {
-//        فقط برای نمایش هستش مثل کنسول لاگ در جاوا اسکریپت
-//        dd($request->name);
+        $request = Product::all(); // همه فیلدها رو می‌گیره
+        return response()->json(['data' => $request]);
+    }
 
-//            برای درج محصول در دیتا بیس با مقادیری که از سمت کاربر آمده
-//        روش اول
-//        Product::create([
-//            'name'=>$request->name
-//        ]);
-//        روش دوم (روش بهتر )
+    public function store(ProductStoreValidation $request)
+    {
+//        $product = Product::create($request->except('image_url'));
+//        $image_url = Storage::putFile('/googooli', $request->image_url);
+//        $product->update(['image_url' => $image_url]);
 
-
-        $Product = Product::create($productStoreValidation->except('image_url'));
-        $image_url = Storage::putFile('/googooli',$productStoreValidation->image_url);
-        $Product->update(['image_url' => $image_url]);
-        $productFull = Product::find($Product->id);
+        $Product = Product::create($request->all());
         return response()->json([
             'message' => 'create product has been successfully !',
-            'data' => new  ProductResource($productFull)
+            'data' => $Product
         ]);
     }
 
     public function show(Product $product)
     {
         return response()->json([
-           'message'=> 'product has been fetch',
-            'data'=> new ProductResource($product)
+            'message' => 'product has been fetch',
+            'data' => $product
         ]);
     }
 
-    public function update(Product $product , ProductStoreValidation $productStoreValidation)
+    public function update(Product $product, ProductStoreValidation $request)
     {
-//        برای نمایس
-//        dd($product , $request->all());
+        $product->update($request->all());
 
-//        روش اول
-//        Product::update([
-//            'name' => $request->name
-//        ]);
-
-//        روش بهتر
-        $product->update(\request()->all());
-        $product = Product::find($product->id);
         return response()->json([
             'message' => 'update product has been successfully',
             'data' => $product
         ]);
-
     }
 
-    public function delete(Product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
         return response()->json([
-           'message' => 'delete product has been successfully'
+            'message' => 'delete product has been successfully'
         ]);
     }
 }

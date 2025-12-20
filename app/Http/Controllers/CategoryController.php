@@ -51,9 +51,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all(); // همه فیلدها رو می‌گیره
-        return response()->json([
-            'data' => $categories
-        ]);
+        return response()->json(['data' => $categories]);
     }
 
 }

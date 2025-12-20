@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('personal_infos', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-//            $table->string('job_title')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('location')->nullable();
-//            $table->string('linkedin')->nullable();
-//            $table->string('portfolio')->nullable();
-            $table->string('marital_status')->nullable(); // Married / Single
-            $table->string('gender')->nullable(); // Female / Male / Other
-            $table->year('birth_year')->nullable();
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('phone', 50)->nullable();
+            $table->string('location', 150)->nullable();
+
+            $table->enum('marital_status', ['Single', 'Married']);
+            $table->enum('gender', ['Male', 'Female']);
+            $table->year('birth_year');
+
             $table->timestamps();
         });
     }
