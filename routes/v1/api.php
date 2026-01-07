@@ -9,7 +9,8 @@ use App\Http\Controllers\{AboutMeController,
     CompanyController,
     JobController,
     PersonalInfoController,
-    ProductController};
+    ProductController,
+    ProfessionalSkillController};
 
 Route::apiResource('product', ProductController::class);
 Route::apiResource('job', JobController::class);
@@ -29,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json($request->user());
     });
 
-    // 🔹 خروج کاربر
+    //  خروج کاربر
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/personal-info', [PersonalInfoController::class, 'show']);
@@ -37,10 +38,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/personal-info', [PersonalInfoController::class, 'update']);
     Route::delete('/personal-info', [PersonalInfoController::class, 'destroy']);
 
-    // 🔹 About Me
+    //  About Me
     Route::get('/about-me', [AboutMeController::class, 'show']);
     Route::post('/about-me', [AboutMeController::class, 'store']);
     Route::delete('/about-me', [AboutMeController::class, 'destroy']);
+
+    //  Professional Skills
+    Route::get('/professional-skills', [ProfessionalSkillController::class, 'show']);
+    Route::post('/professional-skills', [ProfessionalSkillController::class, 'store']);
+    Route::delete('/professional-skills', [ProfessionalSkillController::class, 'destroy']);
+    Route::delete('/professional-skills/{skill}', [ProfessionalSkillController::class, 'remove']);
+
 
 
 });
