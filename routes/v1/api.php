@@ -2,15 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
+use App\Http\Controllers\{AboutMeController,
     AdminController,
     AuthController,
     CategoryController,
     CompanyController,
     JobController,
     PersonalInfoController,
-    ProductController
-};
+    ProductController};
 
 Route::apiResource('product', ProductController::class);
 Route::apiResource('job', JobController::class);
@@ -38,8 +37,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/personal-info', [PersonalInfoController::class, 'update']);
     Route::delete('/personal-info', [PersonalInfoController::class, 'destroy']);
 
-//    Route::apiResource('personal-info', PersonalInfoController::class);
+    // 🔹 About Me
+    Route::get('/about-me', [AboutMeController::class, 'show']);
+    Route::post('/about-me', [AboutMeController::class, 'store']);
+    Route::delete('/about-me', [AboutMeController::class, 'destroy']);
 
-//    Route::get('/personal-info', [PersonalInfoController::class, 'show']);
-//    Route::put('/personal-info', [PersonalInfoController::class, 'update']);
+
 });
